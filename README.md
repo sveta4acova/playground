@@ -1,0 +1,3 @@
+- install node.js
+- npm i
+- run nodemon index
