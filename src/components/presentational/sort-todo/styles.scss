@@ -1,0 +1,12 @@
+.SortTodo {
+  padding: 5px;
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+
+    button:not(:last-child) {
+      margin-right: 2px;
+    }
+  }
+}

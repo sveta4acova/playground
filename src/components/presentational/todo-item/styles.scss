@@ -1,0 +1,9 @@
+.TodoItem {
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+
+  &_through {
+    text-decoration: line-through;
+  }
+}
