@@ -1,0 +1,12 @@
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet" href=`${assetFingerprint('/stylesheets/styles.css')}`)
+    title Blog
+  body
+    include ./header
+    block content
+    include ./footer
+
+    script(defer src="/javascripts/jquery.min.js")
+    script(defer src=`${assetFingerprint('/javascripts/scripts.js')}`)
