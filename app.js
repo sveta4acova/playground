@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require("mongoose");
 const staticAsset = require('static-asset');
 const config = require("./config");
+const routes = require("./routes");
 const Post = require('./models/post');
 
 //database
@@ -25,6 +26,7 @@ mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: 
 //sets and uses
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
@@ -39,6 +41,7 @@ app.get("/", (req, res) => {
     res.render("index", {posts});
   })
 });
+app.use('/api/auth/', routes.auth);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
