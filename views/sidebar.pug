@@ -1,31 +1,37 @@
 .sidebar
-  .box.auth
-    form(method='post').login
-      h2 Вход
-      .form-group
-        label(for='login') Логин
-        input#login(type='text' name='login')
-      .form-group
-        label(for='password') Пароль
-        input#password(type='password' name='password')
-      .buttons
-        button.switch-button.secondary-inverse Регистрация
-        button.login-button Войти
+  if !user.id && !user.login
+    .box.auth
+      form(method='post').login
+        h2 Вход
+        .form-group
+          label(for='login') Логин
+          input#login(type='text' name='login')
+        .form-group
+          label(for='password') Пароль
+          input#password(type='password' name='password')
+        .buttons
+          button.switch-button.secondary-inverse Регистрация
+          button.login-button Войти
 
-    form(method='post').register
-      h2 Регистрация
-      .form-group
-        label(for='regLogin') Логин
-        input#regLogin(type='text' name='login')
-      .form-group
-        label(for='regPassword') Пароль
-        input#regPassword(type='password' name='password')
-      .form-group
-        label(for='confirmPassword') Повторите пароль
-        input#confirmPassword(type='password' name='passwordConfirm')
-      .buttons
-        button.switch-button.secondary-inverse Вход
-        button.register-button Регистрация
+      form(method='post').register
+        h2 Регистрация
+        .form-group
+          label(for='regLogin') Логин
+          input#regLogin(type='text' name='login')
+        .form-group
+          label(for='regPassword') Пароль
+          input#regPassword(type='password' name='password')
+        .form-group
+          label(for='confirmPassword') Повторите пароль
+          input#confirmPassword(type='password' name='passwordConfirm')
+        .buttons
+          button.switch-button.secondary-inverse Вход
+          button.register-button Регистрация
+  else
+    p.box Привет, #{user.login}!
+      br
+      br
+      a(href="/api/auth/logout") Выйти
 
 
   .box box2

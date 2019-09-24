@@ -4,9 +4,23 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const mongoose = require("mongoose");
 const staticAsset = require('static-asset');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const config = require("./config");
 const routes = require("./routes");
 const Post = require('./models/post');
+
+//sessions
+app.use(
+  session({
+    secret: config.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
+  })
+);
 
 //database
 mongoose.Promise = global.Promise;
@@ -37,9 +51,10 @@ app.use(
 
 //routers
 app.get("/", (req, res) => {
-  Post.find({}).then(posts => {
-    res.render("index", {posts});
-  })
+  res.render("index", {user: {
+      id: req.session.userId,
+      login: req.session.userLogin,
+    }});
 });
 app.use('/api/auth/', routes.auth);
 

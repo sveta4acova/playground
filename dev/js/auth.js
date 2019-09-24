@@ -3,7 +3,8 @@ $(function() {
   let flag = true;
   $('.switch-button').on('click', function(e) {
     e.preventDefault();
-    $('input').val('');
+    $('input').val('').removeClass('error');
+    $('p.error').remove();
 
     if (flag) {
       flag = false;
@@ -21,8 +22,11 @@ $(function() {
     $('input').removeClass('error');
   });
 
+  //register
   $('.register-button').on('click', function(e) {
     e.preventDefault();
+    $('input').removeClass('error');
+    $('p.error').remove();
 
     const data = {
       login: $('#regLogin').val(),
@@ -45,9 +49,41 @@ $(function() {
           });
         }
       } else {
-        $('.register h2').after('<p class="success">Отлично!</p>');
+        // $('.register h2').after('<p class="success">Отлично!</p>');
+        $(location).attr('href', '/');
       }
     });
+  });
 
+  //login
+  $('.login-button').on('click', function(e) {
+    e.preventDefault();
+    $('input').removeClass('error');
+    $('p.error').remove();
+
+    const data = {
+      login: $('#login').val(),
+      password: $('#password').val()
+    };
+
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      url: '/api/auth/login'
+    }).done(function(data) {
+      if (!data.ok) {
+        $('.login h2').after('<p class="error">' + data.error + '</p>');
+
+        if (data.fields) {
+          data.fields.forEach(item => {
+            $(`input[name=${item}]`).addClass('error');
+          });
+        }
+      } else {
+        // $('.login h2').after('<p class="success">Отлично!</p>');
+        $(location).attr('href', '/');
+      }
+    });
   });
 });

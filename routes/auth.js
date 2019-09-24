@@ -49,6 +49,9 @@ router.post('/register', (req, res) => {
         password: hash,
       })
         .then(user => {
+          req.session.userId = user.id;
+          req.session.userLogin = user.login;
+
           res.json({
             ok: true,
             user
@@ -70,6 +73,72 @@ router.post('/register', (req, res) => {
 
         });
     });
+  }
+});
+
+
+//POST for login
+router.post('/login', (req, res) => {
+  const {login, password} = req.body;
+
+  if (!login || !password) {
+    let fields = [];
+    if (!login) fields.push('login');
+    if (!password) fields.push('password');
+
+    res.json({
+      ok: false,
+      error: 'Все поля должны быть заполнены!',
+      fields
+    })
+  } else {
+    models.User.findOne({
+      login
+    })
+      .then(user => {
+        if (user) {
+          bcrypt.compare(password, user.password, function(err, result) {
+            if (result) {
+              req.session.userId = user.id;
+              req.session.userLogin = user.login;
+
+              res.json({
+                ok: true,
+              })
+            } else {
+              res.json({
+                ok: false,
+                error: 'Логин и/или пароль введены неверно!',
+                fields: ['login', 'password']
+              })
+            }
+          });
+        } else {
+          res.json({
+            ok: false,
+            error: 'Логин и/или пароль введены неверно!',
+            fields: ['login', 'password']
+          })
+        }
+      })
+      .catch((err) => {
+        res.json({
+          ok: false,
+          error: 'Ошибка, повторите позже!'
+        })
+      });
+  }
+});
+
+//GET for logout
+router.get('/logout', (req, res) => {
+  if (req.session) {
+    //delete session object
+    req.session.destroy(() => {
+      res.redirect('/');
+    })
+  } else {
+    res.redirect('/');
   }
 });
 
