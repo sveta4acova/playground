@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  .main
+    .container
+      .content.add-post
+        form(method='post').post-form
+          h2 Добавление поста
+          .form-group
+            label(for='post-title') Заголовок
+            input#post-title(type='text' name='title')
+          .form-group
+            label(for='post-body') Текст
+            #post-body(name='body')
+          .buttons
+            button.save-button.secondary-inverse Сохранить как черновик
+            button.publish-button Опубликовать
+      include ../sidebar

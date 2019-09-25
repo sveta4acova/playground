@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "gulp & nodemon app.js"
+    "dev": "gulp & nodemon app.js",
+    "init-example": "node mocks.js"
   },
   "repository": {
     "type": "git",
@@ -25,10 +26,15 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "faker": "^4.1.0",
     "jquery": "^3.4.1",
+    "medium-editor": "^5.23.3",
     "mongoose": "^5.7.1",
+    "mongoose-url-slugs": "^1.0.2",
     "pug": "^2.0.4",
-    "static-asset": "^0.6.0"
+    "static-asset": "^0.6.0",
+    "transliter": "^2.2.1",
+    "turndown": "^5.0.3"
   },
   "devDependencies": {
     "eslint": "^6.4.0",

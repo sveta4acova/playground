@@ -1,10 +1,15 @@
 $(function() {
+  const removeErrors = () => {
+    $('.login input, .register input').removeClass('error');
+    $('.login p.error, .register p.error').remove();
+  };
+
   //toggle
   let flag = true;
   $('.switch-button').on('click', function(e) {
     e.preventDefault();
-    $('input').val('').removeClass('error');
-    $('p.error').remove();
+    $('.login input, .register input').val('');
+    removeErrors();
 
     if (flag) {
       flag = false;
@@ -17,16 +22,15 @@ $(function() {
     }
   });
 
-  $('input').on('focus', () => {
-    $('p.error').remove();
-    $('input').removeClass('error');
+  //clear
+  $('.login input, .register input').on('focus', () => {
+    removeErrors();
   });
 
   //register
   $('.register-button').on('click', function(e) {
     e.preventDefault();
-    $('input').removeClass('error');
-    $('p.error').remove();
+    removeErrors();
 
     const data = {
       login: $('#regLogin').val(),
@@ -58,8 +62,7 @@ $(function() {
   //login
   $('.login-button').on('click', function(e) {
     e.preventDefault();
-    $('input').removeClass('error');
-    $('p.error').remove();
+    removeErrors();
 
     const data = {
       login: $('#login').val(),
