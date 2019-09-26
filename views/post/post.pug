@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  .main
+    .container
+      .content
+        .post
+          .top
+            h2 #{post.title}
+          .body
+            p #{post.body}
+          .bottom
+            .author
+              | &Acy;&vcy;&tcy;&ocy;&rcy;:
+              a(href='/') &Gcy;&iecy;&dcy;&iecy;&vcy;&acy;&ncy;
+            a(href='/') &Kcy;&ocy;&mcy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;&icy;&icy;
+      include ../sidebar

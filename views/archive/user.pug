@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  .main
+    .container
+      .content
+        each post in posts
+          .post
+            .top
+              h2
+                a(href=`/posts/${post.url}`) #{post.title}
+            .body
+              p #{post.body}
+            .bottom
+              a(href='/') &Kcy;&ocy;&mcy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;&icy;&icy;
+        .pagination
+          if current > 2
+            a(href=`/users/${_user.login}/${Number(current) - 1}`).new ← К новым
+          if current === 2
+            a(href=`/users/${_user.login}`).new ← На первую страницу
+          if pages > 0 && current < pages
+            a(href=`/users/${_user.login}/${Number(current) + 1}`).old К старым →
+        a(href='/post/add') Создать пост
+      include ../sidebar

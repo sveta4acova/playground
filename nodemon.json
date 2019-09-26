@@ -3,7 +3,8 @@
   "env": {
     "NODE_ENV": "development",
     "PORT": 3000,
-    "MONGO_URL": "mongodb://localhost/blog"
+    "MONGO_URL": "mongodb://localhost/blog",
+    "PER_PAGE": 3
   },
   "ext": ".js,.json",
   "watch": "./"

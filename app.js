@@ -25,6 +25,7 @@ app.use(
 //database
 mongoose.Promise = global.Promise;
 mongoose.set('debug', config.IS_PRODUCTION);
+mongoose.set('useCreateIndex', true);
 
 mongoose.connection
   .on('error', error => console.log(error))
@@ -49,13 +50,8 @@ app.use(
 );
 
 
-//routers
-app.get("/", (req, res) => {
-  res.render("index", {user: {
-      id: req.session.userId,
-      login: req.session.userLogin,
-    }});
-});
+//routes
+app.use('/', routes.archive);
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
 
