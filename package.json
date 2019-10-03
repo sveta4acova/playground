@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "gulp & nodemon app.js",
-    "init-example": "node mocks.js"
+    "dev": "gulp & nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +28,9 @@
     "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "medium-editor": "^5.23.3",
+    "moment": "^2.24.0",
     "mongoose": "^5.7.1",
+    "mongoose-autopopulate": "^0.9.1",
     "mongoose-url-slugs": "^1.0.2",
     "pug": "^2.0.4",
     "static-asset": "^0.6.0",

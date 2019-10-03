@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config');
 const models = require('../models');
-const TurndownService = require('turndown');
+const moment = require('moment');
+moment.locale('ru');
+
 const posts = async (req, res) => {
   const {userId, userLogin} = req.session;
   const perPage = config.PER_PAGE;
@@ -47,8 +49,29 @@ router.get('/posts/:post', async (req, res, next) => {
       error.status = 404;
       next(error);
     } else {
+      const comments = await models.Comment.find({
+        post: post.id,
+        parent: {$exists: false}
+      });
+
+      // .populate({
+      //   path: 'children',
+      //   populate: {
+      //     path: 'children',
+      //     populate: {
+      //       path: 'children'
+      //     }
+      //   }
+      // });
+      // //глубокое наполнение поля children
+      // //если надо 20 уровней вложенности и populate столько же придется сделать Ооооо
+      // //поэтому в модели используется mongoose-autopopulate
+
+
       res.render('post/post', {
         post,
+        comments,
+        moment,
         user: {
           id: userId,
           login: userLogin,

@@ -1,0 +1,11 @@
+mixin comments(items)
+  if items && items.length
+    ul
+      each item in items
+        li(id=item.id)
+          .head
+            a(href=`/users/${item.owner.login}`) #{item.owner.login}
+            span.date #{moment(item.createdAt).fromNow()}
+          span #{item.body}
+          span.link.reply Ответить
+          +comments(item.children)

@@ -57,14 +57,12 @@ router.post('/add', (req, res) => {
         owner: userId,
       })
         .then(post => {
-          console.log(post);
           res.json({
             ok: true,
             post,
           });
         })
         .catch(err => {
-          console.log(err);
           res.json({
             ok: false,
             error: err,

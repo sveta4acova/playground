@@ -15,7 +15,9 @@ block content
               .author
                 | Автор:
                 a(href=`/users/${post.owner.login}`) #{post.owner.login}
-              a(href='/') &Kcy;&ocy;&mcy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;&icy;&icy;
+              a(href=`/posts/${post.url}#${post.id}`)
+                | Комментарии:
+                | #{post.commentCount}
         .pagination
           if current > 2
             a(href=`/archive/${Number(current) - 1}`).new ← К новым

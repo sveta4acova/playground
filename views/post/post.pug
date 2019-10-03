@@ -1,4 +1,5 @@
 extends ../layout
+include ../comments
 
 block content
   .main
@@ -13,5 +14,14 @@ block content
             .author
               | &Acy;&vcy;&tcy;&ocy;&rcy;:
               a(href='/') &Gcy;&iecy;&dcy;&iecy;&vcy;&acy;&ncy;
-            a(href='/') &Kcy;&ocy;&mcy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;&icy;&icy;
+        div(id=post.id).comments
+          h3 Комментарии
+          .comment-list
+            +comments(comments)
+            //span.link Оставить комментарий
+            form.comment
+              textarea(name="body")
+              .buttons
+                button.cancel.secondary Отмена
+                button.send Отправить
       include ../sidebar

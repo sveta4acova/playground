@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const config = require("./config");
 const routes = require("./routes");
 const Post = require('./models/post');
+const mock = require('./mocks');
 
 //sessions
 app.use(
@@ -37,6 +38,7 @@ mongoose.connection
 
 mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
+// mock();
 
 //sets and uses
 app.set("view engine", "pug");
@@ -54,6 +56,7 @@ app.use(
 app.use('/', routes.archive);
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
+app.use('/comment', routes.comment);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {
