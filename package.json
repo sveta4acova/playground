@@ -18,7 +18,8 @@
     "url": "https://github.com/sveta4acova/playground/issues"
   },
   "engines": {
-    "node": "10.13.0"
+    "node": "10.13.0",
+    "npm": "6.4.1"
   },
   "homepage": "https://github.com/sveta4acova/playground#readme",
   "dependencies": {

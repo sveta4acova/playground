@@ -42,8 +42,8 @@ mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: 
 app.set("view engine", "pug");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(staticAsset(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(staticAsset(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, config.DESTINATION)));
 app.use(
   '/javascripts',
