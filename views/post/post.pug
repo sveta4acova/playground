@@ -12,8 +12,8 @@ block content
             p !{post.body}
           .bottom
             .author
-              | &Acy;&vcy;&tcy;&ocy;&rcy;:
-              a(href='/') &Gcy;&iecy;&dcy;&iecy;&vcy;&acy;&ncy;
+              | Автор:
+              a(href=`/users/${post.owner.login}`) #{post.owner.login}
         div(id=post.id).comments
           h3 Комментарии
           .comment-list

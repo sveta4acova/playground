@@ -8,7 +8,6 @@ moment.locale('ru');
 
 const posts = async (req, res) => {
   const {userId, userLogin} = req.session;
-  console.log(userId, userLogin, config);
   const perPage = config.PER_PAGE;
   const page = req.params.page || 1;
 
@@ -57,7 +56,7 @@ router.get('/posts/:post', async (req, res, next) => {
     error.status = 404;
     next(error);
   } else {
-    let post = await models.Post.findOne({url, status: 'published'});
+    let post = await models.Post.findOne({url, status: 'published'}).populate('owner');
 
     if (!post) {
       const error = new Error('Not Found');
