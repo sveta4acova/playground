@@ -22,8 +22,7 @@ const posts = async (req, res) => {
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
-      .sort({createdAt: -1})
-      .exec();
+      .sort({createdAt: -1});
 
     console.log(222, posts);
 
