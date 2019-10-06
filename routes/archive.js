@@ -14,15 +14,17 @@ const posts = async (req, res) => {
 
   console.log(111);
   try {
-    console.log(123, perPage, page);
+    console.log(123, perPage, page, perPage * page - perPage);
+    let test = models.Post.find({status: 'published'},function (err, docs) {
+      console.log(789, docs, err)
+    });
     let posts = models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
-      .sort({createdAt: -1})
-      .exec();
+      .sort({createdAt: -1});
 
-    console.log(222);
+    console.log(222, posts);
 
     if (posts.length) {
       console.log(234, posts);
@@ -42,7 +44,7 @@ const posts = async (req, res) => {
     const count = await models.Post.countDocuments();
     console.log(4444, count);
     res.render('archive/index', {
-      posts: posts || [],
+      posts,
       current: +page,
       pages: Math.ceil(count/perPage),
       user: {
