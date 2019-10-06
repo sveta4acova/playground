@@ -8,15 +8,19 @@ moment.locale('ru');
 
 const posts = async (req, res) => {
   const {userId, userLogin} = req.session;
+  console.log(userId, userLogin, config);
   const perPage = config.PER_PAGE;
   const page = req.params.page || 1;
 
+  console.log(111);
   try {
     let posts = await models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
       .sort({createdAt: -1});
+
+    console.log(222);
 
     if (posts) {
       const converter = new showdown.Converter();
@@ -30,7 +34,10 @@ const posts = async (req, res) => {
       });
     }
 
+    console.log(3333);
+
     const count = await models.Post.countDocuments();
+    console.log(4444, count);
     res.render('archive/index', {
       posts: posts || [],
       current: +page,
@@ -41,11 +48,12 @@ const posts = async (req, res) => {
       }
     });
   } catch(e) {
+    console.log(5555);
     throw new Error('Server Error!');
   }
 };
 
-router.get("/", (req, res) => posts(req, res));
+router.get('/', (req, res) => posts(req, res));
 router.get('/archive/:page', (req, res) => posts(req, res));
 router.get('/posts/:post', async (req, res, next) => {
   const url = req.params.post.trim().replace(/ +(?= )/g, '');
