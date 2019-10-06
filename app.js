@@ -52,9 +52,7 @@ app.use(
 
 
 //routes
-app.use('/', (req, res) => {
-  res.send('Main page')
-});
+app.use('/', routes.archive);
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
 app.use('/comment', routes.comment);

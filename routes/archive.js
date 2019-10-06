@@ -18,19 +18,22 @@ const posts = async (req, res) => {
       .limit(+perPage)
       .populate('owner')
       .sort({createdAt: -1});
-    const converter = new showdown.Converter();
 
-    //перед тем как передавать посты на вывод
-    //преобразуем содержимое body в html
-    posts = posts.map(post => {
-      return Object.assign(post, {
-        body: converter.makeHtml(post.body),
-      })
-    });
+    if (posts) {
+      const converter = new showdown.Converter();
+
+      //перед тем как передавать посты на вывод
+      //преобразуем содержимое body в html
+      posts = posts.map(post => {
+        return Object.assign(post, {
+          body: converter.makeHtml(post.body),
+        })
+      });
+    }
 
     const count = await models.Post.countDocuments();
     res.render('archive/index', {
-      posts,
+      posts: posts || [],
       current: +page,
       pages: Math.ceil(count/perPage),
       user: {
