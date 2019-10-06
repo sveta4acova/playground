@@ -15,9 +15,6 @@ const posts = async (req, res) => {
   console.log(111);
   try {
     console.log(123, perPage,+perPage, page, perPage * page - perPage);
-    let test = models.Post.find({status: 'published'},function (err, docs) {
-      console.log(789, docs, err)
-    });
     let posts = await models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
