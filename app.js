@@ -52,7 +52,7 @@ app.use(
 
 
 //routes
-app.use('/', (res, req) => {
+app.use('/', (req, res) => {
   res.send('Main page')
 });
 app.use('/api/auth/', routes.auth);
