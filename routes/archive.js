@@ -7,6 +7,7 @@ const moment = require('moment');
 moment.locale('ru');
 
 const posts = async (req, res) => {
+  console.log(7777)
   const {userId, userLogin} = req.session;
   const perPage = config.PER_PAGE;
   const page = req.params.page || 1;
