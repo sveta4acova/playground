@@ -1,3 +1,11 @@
+#Учим Node.js, создавая блог
+
++ install node.js and mongodb
++ npm i
++ run mongod
++ npm run dev
+
+
 ##nodemon.json - при запуске nodemon он перезапишет переменные окружения (которые в файле .env) в поле env (process.env). Реагировать будет на обновление файлов, расширение которых соответсвует ext
 
 ###Деплой на Heroku - выполнены инстукции с Heroku и MongoDB.Atlas, но были некоторые проблемы с: 
