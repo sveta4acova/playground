@@ -14,7 +14,11 @@
   }
   .body {
     p {
-      text-align: justify;
+      text-align: left;
+    }
+
+    img {
+      width: 100%;
     }
   }
 
@@ -54,5 +58,44 @@
       padding: 8px 10px;
       outline: none;
     }
+  }
+}
+
+#fileinfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid $greyColor;
+  padding: $freeSpace;
+  background-color: $whiteColor;
+  border-radius: $borderRadius;
+  margin-bottom: $freeSpace;
+}
+
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid $greyColor;
+  padding-left: $freeSpace;
+  padding-right: $freeSpace;
+  border-radius: $borderRadius;
+  height: 50px;
+
+  input[type=file] {
+    display: none;
+  }
+}
+
+.img-container {
+  height: 50px;
+  border: 1px solid $greyColor;
+  margin-right: $freeSpace;
+
+  img {
+    height: 100%;
   }
 }

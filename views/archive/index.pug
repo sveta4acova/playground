@@ -9,8 +9,10 @@ block content
             .top
               h2
                 a(href=`/posts/${post.url}`) #{post.title}
+                if post.owner.login === user.login
+                  a(href=`/post/edit/${post.id}`).post-edit ✎
             .body
-              p #{post.body}
+              p !{post.body}
             .bottom
               .author
                 | Автор:

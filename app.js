@@ -9,7 +9,6 @@ const MongoStore = require('connect-mongo')(session);
 const config = require("./config");
 const routes = require("./routes");
 const Post = require('./models/post');
-const mock = require('./mocks');
 
 //sessions
 app.use(
@@ -34,11 +33,10 @@ mongoose.connection
   .once('open', () => {
     const info = mongoose.connections[0];
     console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    // require('./mocks')();
   });
 
 mongoose.connect(config.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-
-// mock();
 
 //sets and uses
 app.set("view engine", "pug");
@@ -46,6 +44,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(staticAsset(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, config.DESTINATION)));
 app.use(
   '/javascripts',
   express.static(path.join(__dirname, 'node_modules', 'jquery', 'dist'))
@@ -57,6 +56,7 @@ app.use('/', routes.archive);
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
 app.use('/comment', routes.comment);
+app.use('/upload', routes.upload);
 
 //catch 404 and forward to error handler
 app.use((req, res, next) => {

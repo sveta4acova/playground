@@ -6,9 +6,12 @@ const tr = require('transliter');
 let schema = new Schema({
   title: {
     type: String,
-    required: true,
+    default: '',
   },
   body: {
+    type: String,
+  },
+  url: {
     type: String,
   },
   owner: {
@@ -18,6 +21,18 @@ let schema = new Schema({
   commentCount: {
     type: Number,
     default: 0,
+  },
+  uploads: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Upload'
+    }
+  ],
+  status: {
+    type: String,
+    enum: ['published', 'draft'],
+    required: true,
+    default: 'published'
   }
 }, {
   timestamps: true,
@@ -37,11 +52,17 @@ schema.statics = {
   }
 };
 
-schema.plugin(
-  URLSlugs('title', {
-    field: 'url',
-    generator: text => tr.slugify(text),
-  })
-);
+// schema.pre('save', function(next) {
+//   this.url = this.title ? `${tr.slugify(this.title)}-${Date.now().toString(36)}` : '';
+//   next();
+// });
+
+// schema.plugin(
+//   URLSlugs('title', {
+//     field: 'url',
+//     update: true,
+//     generator: text => tr.slugify(text),
+//   })
+// );
 
 module.exports = mongoose.model('Post', schema);

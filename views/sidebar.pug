@@ -28,10 +28,13 @@
           button.switch-button.secondary-inverse Вход
           button.register-button Регистрация
   else
-    p.box Привет, #{user.login}!
-      br
-      br
-      a(href="/api/auth/logout") Выйти
-
+    .box
+      ul
+        li
+          a(href=`/users/${user.login}`) Привет, #{user.login}!
+        li
+          a(href='/post/add') Добавить пост
+        li
+          a(href="/api/auth/logout") Выйти
 
   .box box2

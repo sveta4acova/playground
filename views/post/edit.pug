@@ -1,0 +1,30 @@
+extends ../layout
+
+block content
+  .main
+    .container
+      .content.add-post
+        form(method='post').post-form
+          h2
+            if post.title
+              | Редактирование поста
+            else
+              | Добавление поста
+          .form-group
+            label(for='post-title') Заголовок
+            input#post-title(type='text' name='title' value=`${post.title}`)
+          .form-group
+            label(for='post-body') Текст
+            textarea(name='body')#post-body #{post.body}
+            input(type="hidden" name="postId" id="post-id" value=`${post.id}`)
+          #fileinfo
+            each item in post.uploads
+              .img-container
+                img(src=`/uploads${item.path}` alt="")
+            label(for="file").custom-file-upload
+              input(type="file" name="file" id="file" required)
+              | +
+          .buttons
+            button.save-button.secondary-inverse Сохранить как черновик
+            button.publish-button Опубликовать
+      include ../sidebar

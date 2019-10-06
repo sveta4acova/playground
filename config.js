@@ -10,4 +10,5 @@ module.exports = {
   SESSION_SECRET: process.env.SESSION_SECRET,
   IS_PRODUCTION: process.env.NODE_DEV === 'production',
   PER_PAGE: process.env.PER_PAGE,
+  DESTINATION: 'uploads',
 };

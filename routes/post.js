@@ -1,27 +1,69 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
-const TurndownService = require('turndown');
+const tr = require('transliter');
 
 //GET for add
-router.get('/add', (req, res) => {
+router.get('/add', async (req, res) => {
   const id = req.session.userId;
   const login = req.session.userLogin;
 
   if (!id || !login) {
     res.redirect('/');
   } else {
-    res.render('post/add', {user: {
-        id,
-        login,
-      }});
+    try {
+      const post = await models.Post.findOne({owner: id, status: 'draft'});
+
+      if (post) {
+        res.redirect(`/post/edit/${post.id}`);
+      } else {
+        const post = await models.Post.create({owner: id, status: 'draft'});
+        res.redirect(`/post/edit/${post.id}`);
+      }
+
+    } catch(err) {
+      console.log(err);
+    }
   }
 });
 
-router.post('/add', (req, res) => {
+//GET for edit
+router.get('/edit/:id', async (req, res, next) => {
+  const {userId} = req.session;
+  const {userLogin} = req.session;
+  const id = req.params.id.trim().replace(/ +(?= )/g, '');
+
+  if (!userId || !userLogin) {
+    res.redirect('/');
+  } else {
+    try {
+      const post = await models.Post.findOne({_id: id}).populate('uploads');
+
+      if (!post) {
+        // const error = new Error('Not Found');
+        // error.status = 404;
+        // next(error);
+      }
+
+      res.render('post/edit', {
+        post,
+        user: {
+          id: userId,
+          login: userLogin,
+        }
+      });
+    } catch(err) {
+      console.log(err);
+    }
+  }
+});
+
+router.post('/add', async (req, res) => {
   const {userId, userLogin} = req.session;
   const title = req.body.title.trim().replace(/ +(?= )/g, '');
-  const {body} = req.body;
+  const body = req.body.body.trim().replace(/ +(?= )/g, '');
+  const url = title ? `${tr.slugify(title)}-${Date.now().toString(36)}` : '';
+  const {isDraft, postId} = req.body;
 
   if (!userId || !userLogin) {
     res.redirect('/');
@@ -48,27 +90,43 @@ router.post('/add', (req, res) => {
         error: 'Текст не менее 3 символов!',
         fields: ['body']
       });
+    } else if (!postId) {
+      res.json({
+        ok: false,
+      });
     } else {
-      const turndownService = new TurndownService();
+      try {
+        const post = await models.Post.findOneAndUpdate({
+          _id: postId,
+          owner: userId
+        }, {
+          title,
+          body,
+          url,
+          status: isDraft ? 'draft' : 'published'
+        }, {
+          new: true,
+        });
 
-      models.Post.create({
-        title,
-        body: turndownService.turndown(body),
-        owner: userId,
-      })
-        .then(post => {
+        if (!post) {
+          res.json({
+            ok: false,
+            error: 'Пост не твой!'
+          })
+        } else {
           res.json({
             ok: true,
             post,
-          });
-        })
-        .catch(err => {
-          res.json({
-            ok: false,
-            error: err,
-          });
-        })
+          })
+        }
+      } catch(err) {
+        res.json({
+          ok: false,
+          error: err,
+        });
+      }
     }
   }
 });
+
 module.exports = router;

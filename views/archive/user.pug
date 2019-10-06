@@ -10,7 +10,7 @@ block content
               h2
                 a(href=`/posts/${post.url}`) #{post.title}
             .body
-              p #{post.body}
+              p:markdown-it !{post.body}
             .bottom
               a(href='/') &Kcy;&ocy;&mcy;&mcy;&iecy;&ncy;&tcy;&acy;&rcy;&icy;&icy;
         .pagination

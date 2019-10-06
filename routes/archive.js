@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config');
 const models = require('../models');
+const showdown = require('showdown');
 const moment = require('moment');
 moment.locale('ru');
 
@@ -11,11 +12,21 @@ const posts = async (req, res) => {
   const page = req.params.page || 1;
 
   try {
-    const posts = await models.Post.find({})
+    let posts = await models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
       .sort({createdAt: -1});
+    const converter = new showdown.Converter();
+
+    //перед тем как передавать посты на вывод
+    //преобразуем содержимое body в html
+    posts = posts.map(post => {
+      return Object.assign(post, {
+        body: converter.makeHtml(post.body),
+      })
+    });
+
     const count = await models.Post.countDocuments();
     res.render('archive/index', {
       posts,
@@ -42,7 +53,7 @@ router.get('/posts/:post', async (req, res, next) => {
     error.status = 404;
     next(error);
   } else {
-    const post = await models.Post.findOne({url});
+    let post = await models.Post.findOne({url, status: 'published'});
 
     if (!post) {
       const error = new Error('Not Found');
@@ -67,6 +78,8 @@ router.get('/posts/:post', async (req, res, next) => {
       // //если надо 20 уровней вложенности и populate столько же придется сделать Ооооо
       // //поэтому в модели используется mongoose-autopopulate
 
+      const converter = new showdown.Converter();
+      post.body = converter.makeHtml(post.body);
 
       res.render('post/post', {
         post,
@@ -90,11 +103,20 @@ router.get('/users/:login/:page*?', async (req, res) => { //page опциона�
 
   try {
     const user = await models.User.findOne({login});
-    const posts = await models.Post.find({owner: user.id})
+    let posts = await models.Post.find({owner: user.id})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .sort({createdAt: -1});
-    const count = await models.Post.countDocuments({owner: user.id}); //посчитать посты одного конкретного пользователя
+    const converter = new showdown.Converter();
+
+    //перед тем как передавать посты на вывод
+    //преобразуем содержимое body в html
+    posts = posts.map(post => {
+      return Object.assign(post, {
+        body: converter.makeHtml(post.body),
+      })
+    });
+    const count = models.Post.countDocuments({owner: user.id}); //посчитать посты одного конкретного пользователя
 
     res.render('archive/user', {
       posts,
