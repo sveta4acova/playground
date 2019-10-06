@@ -15,7 +15,7 @@ const posts = async (req, res) => {
   console.log(111);
   try {
     console.log(123, perPage, page);
-    let posts = await models.Post.find({status: 'published'})
+    let posts = models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
