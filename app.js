@@ -52,7 +52,11 @@ app.use(
 
 
 //routes
-app.use('/', routes.archive);
+app.use('/', (res, req) => {
+  res.send({
+    ok: true,
+  })
+});
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
 app.use('/comment', routes.comment);
