@@ -20,5 +20,4 @@ block content
             a(href=`/users/${_user.login}`).new ← На первую страницу
           if pages > 0 && current < pages
             a(href=`/users/${_user.login}/${Number(current) + 1}`).old К старым →
-        a(href='/post/add') Создать пост
       include ../sidebar
