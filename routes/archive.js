@@ -23,7 +23,8 @@ const posts = async (req, res) => {
 
     console.log(222);
 
-    if (posts) {
+    if (posts.length) {
+      console.log(234, posts);
       const converter = new showdown.Converter();
 
       //перед тем как передавать посты на вывод
