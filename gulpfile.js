@@ -37,7 +37,9 @@ gulp.task('scripts', () => {
   );
 });
 
-gulp.task('default', ['scss', 'scripts'], () => {
+gulp.task('build', ['scss', 'scripts']);
+
+gulp.task('default', ['build'], () => {
   gulp.watch('dev/scss/**/*.scss', ['scss']);
   gulp.watch('dev/js/**/*.js', ['scripts']);
 });

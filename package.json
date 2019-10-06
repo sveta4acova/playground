@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev": "gulp & nodemon app.js"
+    "dev": "gulp & nodemon app.js",
+    "postinstall": "gulp build"
   },
   "repository": {
     "type": "git",
