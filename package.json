@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/sveta4acova/playground/issues"
   },
+  "engines": {
+    "node": ">=9.0.0"
+  },
   "homepage": "https://github.com/sveta4acova/playground#readme",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
