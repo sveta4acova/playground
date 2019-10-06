@@ -53,9 +53,7 @@ app.use(
 
 //routes
 app.use('/', (res, req) => {
-  res.send({
-    ok: true,
-  })
+  res.send('Main page')
 });
 app.use('/api/auth/', routes.auth);
 app.use('/post', routes.post);
