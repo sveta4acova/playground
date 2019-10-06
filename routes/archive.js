@@ -12,19 +12,14 @@ const posts = async (req, res) => {
   const perPage = config.PER_PAGE;
   const page = req.params.page || 1;
 
-  console.log(111);
   try {
-    console.log(123, perPage,+perPage, page, perPage * page - perPage);
     let posts = await models.Post.find({status: 'published'})
       .skip(perPage * page - perPage)
       .limit(+perPage)
       .populate('owner')
       .sort({createdAt: -1});
 
-    console.log(222, posts);
-
     if (posts.length) {
-      console.log(234, posts);
       const converter = new showdown.Converter();
 
       //перед тем как передавать посты на вывод
@@ -36,10 +31,7 @@ const posts = async (req, res) => {
       });
     }
 
-    console.log(3333);
-
     const count = await models.Post.countDocuments();
-    console.log(4444, count);
     res.render('archive/index', {
       posts,
       current: +page,
@@ -50,7 +42,6 @@ const posts = async (req, res) => {
       }
     });
   } catch(e) {
-    console.log(5555);
     throw new Error('Server Error!');
   }
 };
