@@ -1,0 +1,27 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest --watch *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sveta4acova/playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sveta4acova/playground/issues"
+  },
+  "homepage": "https://github.com/sveta4acova/playground#readme",
+  "devDependencies": {
+    "@types/jest": "^24.9.1",
+    "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
