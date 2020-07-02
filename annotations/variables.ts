@@ -48,3 +48,43 @@
   test = 10;
   test = 'hfhjfj';
 })();
+
+enum Colors {Red = 'red', Green = 'green'}
+enum Cars {Audi, Bmw}
+console.log(Cars[0], Cars.Audi, Colors.Green);
+
+//а тут ошибки нет(
+//переменные типа Object позволяют только назначить им любое значение
+//типа Object нужно избегать
+let test: Object = 6;
+//а тут ts ошибку показывает
+// let test2: object = 9;
+
+
+//TS доверься, знаем, что делаем
+let someValue: any = 'some string';
+let strLength: number = (<string>someValue).length;
+//эквивалентно
+// let strLength: number = (someValue as string).length;
+
+let notMutateArr: ReadonlyArray<number> = [1,2,3];
+notMutateArr.map((item: number) => {
+  console.log(item)
+});
+//не прокатит
+//notMutateArr.push(4);
+
+//так не работает, т.к. notMutateArr защищен от изменений
+//let mutateArr: number[] = notMutateArr;
+//нужно так
+let mutateArr = notMutateArr as number[];
+mutateArr.push(5);
+
+//ReadonlyArray эффект можно так сделать
+let anotherNotMutateArr: readonly number[] = [1,2,3,4];
+anotherNotMutateArr.map((item: number) => {
+  console.log(item)
+});
+// anotherNotMutateArr.push(7);
+
+//ts-node variables.ts - выполнить

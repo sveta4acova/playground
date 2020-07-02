@@ -39,3 +39,13 @@ const logWeatherES6 = ({ date, weather }: { date: Date, weather: string}): void 
 };
 
 logWeatherES6(todaysWeather);
+
+function pickCard(x: object): string;
+function pickCard(x: number): number;
+function pickCard(x: any): any {
+  if (typeof x === 'object') {
+    return 'object';
+  } else if (typeof x === 'number') {
+    return 123;
+  }
+}
