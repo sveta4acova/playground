@@ -87,4 +87,46 @@ anotherNotMutateArr.map((item: number) => {
 });
 // anotherNotMutateArr.push(7);
 
+enum Test1 {
+  a,
+  b,
+  c
+}
+
+enum Test2 {
+  a = 1,
+  b,
+  c,
+}
+
+//не катит
+// enum Test3 {
+//   a = 'some string',
+//   b,
+//   c,
+// }
+
+//а так ок
+enum Test4 {
+  b,
+  c,
+  a = 'some string',
+}
+
+//помешать типы тоже не дает
+// enum Test5 {
+//   a= 1 + 1,
+//   b= 'some string',
+//   c,
+// }
+
+enum Test6 {
+  A,
+  B,
+}
+
+const testConst1: Test6.A = 789;
+
+let x = [0, 1, null];
+
 //ts-node variables.ts - выполнить

@@ -56,3 +56,17 @@ interface IndexableTypesObj {
 const testObj: IndexableTypesObj = {
   color: 'red',
 };
+
+interface Named {
+  name: string;
+}
+
+class Person {
+  name: string = 'Sveta';
+}
+
+//так правильно и все ок
+// const User: Person = new Person();
+//но и так тоже ошибки нет
+//т.к. типы Named и Person совместимы
+const User: Named = new Person();
